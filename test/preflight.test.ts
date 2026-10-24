@@ -5,6 +5,9 @@ import { delimiter, join } from "node:path";
 import { describe, it } from "node:test";
 import { findExecutable, installHint, preflight } from "../src/preflight.ts";
 
+// POSIX permission bits and ":"-separated PATH semantics do not exist on Windows hosts.
+const posixOnly = { skip: process.platform === "win32" };
+
 function scratch(): string {
   return mkdtempSync(join(tmpdir(), "pi-lazydocker-"));
 }
@@ -18,7 +21,7 @@ function fakeBinary(dir: string, name: string, mode = 0o755): string {
 }
 
 describe("findExecutable", () => {
-  it("finds a binary on PATH, first match wins", () => {
+  it("finds a binary on PATH, first match wins", posixOnly, () => {
     const root = scratch();
     const first = fakeBinary(join(root, "a"), "lazydocker");
     fakeBinary(join(root, "b"), "lazydocker");
@@ -26,13 +29,13 @@ describe("findExecutable", () => {
     assert.equal(findExecutable("lazydocker", env, "linux"), first);
   });
 
-  it("ignores files that are not executable", () => {
+  it("ignores files that are not executable", posixOnly, () => {
     const root = scratch();
     fakeBinary(root, "lazydocker", 0o644);
     assert.equal(findExecutable("lazydocker", { PATH: root }, "linux"), undefined);
   });
 
-  it("accepts an explicit path to an executable", () => {
+  it("accepts an explicit path to an executable", posixOnly, () => {
     const root = scratch();
     const path = fakeBinary(root, "my-wrapper");
     assert.equal(findExecutable(path, { PATH: "" }, "linux"), path);
@@ -80,7 +83,7 @@ describe("preflight", () => {
     );
   });
 
-  it("returns the resolved executable when everything is ready", () => {
+  it("returns the resolved executable when everything is ready", posixOnly, () => {
     const root = scratch();
     const path = fakeBinary(root, "lazydocker");
     assert.deepEqual(preflight({ mode: "tui", command: "lazydocker", env: { PATH: root }, platform: "linux" }), {
