@@ -49,7 +49,7 @@ export async function openLazydocker(ctx: LaunchContext, config: LazydockerConfi
 
     const loaded = await loadBackend();
     if (!loaded.ok) {
-      ctx.ui.notify(`Overlay unavailable (${loaded.error}); opening lazydocker fullscreen.`, "warning");
+      ctx.ui.notify(`Overlay unavailable (${firstLine(loaded.error)}); opening lazydocker fullscreen.`, "warning");
       await fullscreen(ctx, options);
       return;
     }
@@ -65,8 +65,15 @@ export async function openLazydocker(ctx: LaunchContext, config: LazydockerConfi
       (tui, theme, _keybindings, done) => new LazydockerOverlay(tui, theme, loaded.backend, { ...options, height: config.height }, done),
       { overlay: true, overlayOptions: { width: config.width, maxHeight: config.height, anchor: "center", margin: 1 } },
     );
-    if (result?.action === "fullscreen") await fullscreen(ctx, options);
+    if (result?.action === "fullscreen") {
+      if (result.reason) ctx.ui.notify(`Overlay could not start lazydocker (${firstLine(result.reason)}); opening it fullscreen.`, "warning");
+      await fullscreen(ctx, options);
+    }
   } catch (error) {
     ctx.ui.notify(`lazydocker failed: ${error instanceof Error ? error.message : String(error)}`, "error");
   }
+}
+
+function firstLine(text: string): string {
+  return text.split(/\r?\n/, 1)[0]?.trim() ?? text;
 }

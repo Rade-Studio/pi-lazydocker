@@ -44,7 +44,8 @@ export function preflight({ mode, command, env = process.env, platform = process
 /** Resolve a command like the shell would, without spawning anything. */
 export function findExecutable(command: string, env: Env = process.env, platform: NodeJS.Platform = process.platform): string | undefined {
   const windows = platform === "win32";
-  const extensions = windows ? ["", ...(readEnv(env, "PATHEXT", windows) ?? ".COM;.EXE;.BAT;.CMD").split(";").filter(Boolean)] : [""];
+  // On Windows a PATHEXT match beats an extensionless file (such as an npm shell shim).
+  const extensions = windows ? [...(readEnv(env, "PATHEXT", windows) ?? ".COM;.EXE;.BAT;.CMD").split(";").filter(Boolean), ""] : [""];
   const hasSeparator = command.includes("/") || (windows && command.includes("\\"));
 
   const candidates = hasSeparator || isAbsolute(command)

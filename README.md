@@ -93,7 +93,7 @@ set -Ux PI_LAZYDOCKER_WIDTH 85%
 ## Requirements
 
 - Pi in interactive (TUI) mode. In print, JSON or RPC mode the command explains why it can't run.
-- Node.js ≥ 22.18.
+- Node.js ≥ 22.19 (the same minimum as Pi).
 - lazydocker on your `PATH` (or set `PI_LAZYDOCKER_COMMAND`).
 - A reachable Docker (or Docker-compatible) engine. lazydocker reports connection problems itself.
 

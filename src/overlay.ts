@@ -56,7 +56,7 @@ export async function loadPtyBackend(): Promise<BackendLoadResult> {
   }
 }
 
-export type OverlayResult = { action: "closed" } | { action: "fullscreen" } | { action: "exited"; code: number };
+export type OverlayResult = { action: "closed" } | { action: "fullscreen"; reason?: string } | { action: "exited"; code: number };
 
 export interface OverlayOptions {
   executable: string;
@@ -164,7 +164,15 @@ export class LazydockerOverlay implements Component, Focusable {
     cleanEnv.TERM = "xterm-256color";
     cleanEnv.COLORTERM = "truecolor";
 
-    const pty = this.backend.spawn(executable, args, { name: "xterm-256color", cols, rows, cwd, env: cleanEnv });
+    let pty: PtyLike;
+    try {
+      pty = this.backend.spawn(executable, args, { name: "xterm-256color", cols, rows, cwd, env: cleanEnv });
+    } catch (error) {
+      // Called from render(): finish outside the render pass and let the launcher fall back.
+      const reason = error instanceof Error ? error.message : String(error);
+      queueMicrotask(() => this.finish({ action: "fullscreen", reason }));
+      return;
+    }
     this.pty = pty;
     this.alive = true;
     pty.onData((data) => {

@@ -76,6 +76,21 @@ describe("openLazydocker", () => {
     assert.deepEqual(fullscreen, [{ executable: binary, args: [], cwd: "/work/proj", env }]);
   });
 
+  it("shows only the first line of a multi-line backend error", async () => {
+    const { ctx, notes } = fakeCtx();
+    const { deps: d } = deps({ loadBackend: async () => ({ ok: false, error: "could not find the platform package\n  at require (x)\n  more" }) });
+    await openLazydocker(ctx, config, { mode: "overlay", args: [] }, d);
+    assert.deepEqual(notes, [["Overlay unavailable (could not find the platform package); opening lazydocker fullscreen.", "warning"]]);
+  });
+
+  it("warns with the reason when the overlay could not start lazydocker", async () => {
+    const { ctx, notes } = fakeCtx({ overlayResult: { action: "fullscreen", reason: "conpty unavailable" } });
+    const { deps: d, fullscreen } = deps();
+    await openLazydocker(ctx, config, { mode: "overlay", args: [] }, d);
+    assert.deepEqual(notes, [["Overlay could not start lazydocker (conpty unavailable); opening it fullscreen.", "warning"]]);
+    assert.equal(fullscreen.length, 1);
+  });
+
   it("falls back to fullscreen when the terminal is too small", async () => {
     const { ctx, notes } = fakeCtx();
     const { deps: d, fullscreen } = deps({ terminalSize: () => ({ rows: 14, columns: 100 }) });

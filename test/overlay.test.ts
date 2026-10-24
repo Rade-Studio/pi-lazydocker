@@ -132,6 +132,25 @@ describe("LazydockerOverlay", () => {
     assert.deepEqual(results, []);
   });
 
+  it("asks for fullscreen with the reason when the pty cannot spawn", async () => {
+    const results: OverlayResult[] = [];
+    const backend: PtyBackend = {
+      spawn() {
+        throw new Error("conpty unavailable");
+      },
+      createTerminal: (cols, rows) => new xterm.Terminal({ cols, rows, allowProposedApi: true }),
+    };
+    const tui = { terminal: { rows: 30, columns: 100 }, requestRender: () => {} };
+    const theme = { fg: (_color: string, text: string) => text, bold: (text: string) => text };
+    const overlay = new LazydockerOverlay(tui as never, theme as never, backend,
+      { executable: "/bin/lazydocker", args: [], cwd: "/work/myproj", env: {}, height: "50%" },
+      (result) => results.push(result));
+    const lines = overlay.render(60);
+    assert.ok(lines.every((line) => visibleWidth(line) === 60));
+    await flush();
+    assert.deepEqual(results, [{ action: "fullscreen", reason: "conpty unavailable" }]);
+  });
+
   it("forwards translated input to the pty", () => {
     const { overlay, pty, results } = setup();
     overlay.render(60);

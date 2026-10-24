@@ -24,12 +24,13 @@ function fakes() {
   return { calls, tui, output, stdin, io };
 }
 
-const options = (script: string) => ({ executable: "/bin/sh", args: ["-c", script], cwd: process.cwd(), env: { PATH: "/bin:/usr/bin" } });
+// Node itself is the child process so the tests run on every CI platform.
+const options = (script: string) => ({ executable: process.execPath, args: ["-e", script], cwd: process.cwd(), env: { ...process.env } });
 
 describe("runSuspended", () => {
   it("stops, runs, restarts and forces a render on exit 0", async () => {
     const { calls, tui, output, io } = fakes();
-    const result = await runSuspended(tui, options("exit 0"), io);
+    const result = await runSuspended(tui, options("process.exit(0)"), io);
     assert.deepEqual(result, { code: 0, signal: null });
     assert.deepEqual(calls, ["stop", "start", "render:true"]);
     assert.equal(output[0], "\x1b[2J\x1b[H");
@@ -37,7 +38,7 @@ describe("runSuspended", () => {
 
   it("waits for a key in raw mode after a non-zero exit", async () => {
     const { calls, tui, output, stdin, io } = fakes();
-    const pending = runSuspended(tui, options("exit 3"), io);
+    const pending = runSuspended(tui, options("process.exit(3)"), io);
     while (!calls.includes("resume")) await new Promise((resolve) => setTimeout(resolve, 5));
     assert.match(output.join(""), /lazydocker exited with code 3\. Press any key to return to Pi\./);
     assert.ok(!calls.includes("start"));
@@ -74,7 +75,7 @@ describe("runFullscreen", () => {
         },
       },
     };
-    const result = await runFullscreen(ctx as never, options("exit 0"), io);
+    const result = await runFullscreen(ctx as never, options("process.exit(0)"), io);
     assert.deepEqual(result, { code: 0, signal: null });
     assert.equal(customOptions, undefined);
   });

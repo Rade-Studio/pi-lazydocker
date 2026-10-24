@@ -46,6 +46,13 @@ describe("findExecutable", () => {
     assert.equal(findExecutable("lazydocker", {}, "linux"), undefined);
   });
 
+  it("prefers a PATHEXT match over an extensionless shim on Windows", () => {
+    const root = scratch();
+    fakeBinary(root, "lazydocker");
+    const exe = fakeBinary(root, "lazydocker.EXE");
+    assert.equal(findExecutable("lazydocker", { Path: root, PATHEXT: ".COM;.EXE" }, "win32"), exe);
+  });
+
   it("tries PATHEXT extensions on Windows", () => {
     const root = scratch();
     const path = fakeBinary(root, "lazydocker.EXE");
