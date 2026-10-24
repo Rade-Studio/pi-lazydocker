@@ -1,0 +1,91 @@
+name: Bug report
+description: Something in pi-lazydocker does not work as documented.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! If the problem also happens when you run `lazydocker` directly in a terminal, please report it to [lazydocker](https://github.com/jesseduffield/lazydocker/issues) instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: I pressed alt+l and nothing happened.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start Pi
+        2. Press alt+l
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Overlay (alt+l or /lazydocker)
+        - Fullscreen (/lazydocker --fullscreen or ctrl+o)
+        - Both
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - WSL
+    validations:
+      required: true
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal emulator
+      placeholder: Windows Terminal, iTerm2, kitty, tmux 3.4...
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Versions
+      description: Paste the output of these commands.
+      value: |
+        pi-lazydocker:
+        pi --version:
+        node --version:
+        lazydocker --version:
+        docker version --format '{{.Server.Version}}':
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: PI_LAZYDOCKER_* variables
+      description: Any of `PI_LAZYDOCKER_KEY`, `PI_LAZYDOCKER_MODE`, `PI_LAZYDOCKER_WIDTH`, `PI_LAZYDOCKER_HEIGHT` or `PI_LAZYDOCKER_COMMAND` you have set. Leave empty if none.
+      render: text
+  - type: textarea
+    id: notifications
+    attributes:
+      label: Notifications or error messages
+      description: Copy any message Pi showed, for example `Overlay unavailable (...)`.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: This is not a security vulnerability (those go to a private advisory).
+          required: true

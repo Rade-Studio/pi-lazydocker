@@ -1,0 +1,23 @@
+name: Documentation
+description: Something in the README or other docs is missing, wrong or unclear.
+title: "[Docs]: "
+labels: ["documentation", "triage"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Where?
+      description: File and section, or a link.
+      placeholder: README.md > Configuration
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is missing, wrong or unclear?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested wording

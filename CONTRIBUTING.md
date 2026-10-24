@@ -2,6 +2,8 @@
 
 Thanks for helping improve pi-lazydocker! Issues and pull requests are welcome.
 
+Open issues through the [issue forms](https://github.com/Rade-Studio/pi-lazydocker/issues/new/choose): bug report, feature request, documentation or question. Each form applies its labels (`bug`, `enhancement`, `documentation` or `question`, plus `triage`) automatically. A maintainer removes `triage` after the first review.
+
 ## Setup
 
 ```bash

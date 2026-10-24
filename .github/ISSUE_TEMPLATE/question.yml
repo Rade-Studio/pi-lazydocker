@@ -1,0 +1,19 @@
+name: Question
+description: Ask how to use or configure pi-lazydocker.
+title: "[Question]: "
+labels: ["question", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Please check the [README](https://github.com/Rade-Studio/pi-lazydocker#readme), especially Configuration and Troubleshooting, before asking.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Operating system, terminal, and what you already tried.

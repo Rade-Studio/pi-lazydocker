@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/Rade-Studio/pi-lazydocker/security/advisories/new
+    about: Please report security problems privately, not in a public issue.
+  - name: Problem with lazydocker itself
+    url: https://github.com/jesseduffield/lazydocker/issues
+    about: If it also happens when you run lazydocker outside Pi, report it upstream.
