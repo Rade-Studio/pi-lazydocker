@@ -67,7 +67,7 @@ export interface OverlayOptions {
   height: SizeValue;
 }
 
-const HINT = "ctrl+q close · ctrl+f fullscreen";
+const HINT = "ctrl+q close · ctrl+o fullscreen";
 const MIN_INNER_COLS = 10;
 const MIN_INNER_ROWS = 3;
 
@@ -120,7 +120,7 @@ export class LazydockerOverlay implements Component, Focusable {
       this.finish({ action: "closed" });
       return;
     }
-    if (matchesKey(data, "ctrl+f")) {
+    if (matchesKey(data, "ctrl+o")) {
       this.finish({ action: "fullscreen" });
       return;
     }

@@ -32,7 +32,7 @@
 | Mode | What you get | Open it with |
 |---|---|---|
 | **Overlay** (default) | A rounded, theme-colored window centered over Pi. Pi stays visible and the agent keeps working underneath. | `alt+l`, `/lazydocker`, `/lazydocker --overlay` |
-| **Fullscreen** | lazydocker owns the whole terminal; Pi is restored exactly as it was when you quit. | `/lazydocker --fullscreen`, or `ctrl+f` from the overlay |
+| **Fullscreen** | lazydocker owns the whole terminal; Pi is restored exactly as it was when you quit. | `/lazydocker --fullscreen`, or `ctrl+o` from the overlay |
 
 The overlay falls back to fullscreen by itself when it cannot run: if the native PTY module failed to install on your platform, or if the terminal is smaller than 60×15. You always get lazydocker.
 
@@ -42,7 +42,7 @@ The overlay falls back to fullscreen by itself when it cannot run: if the native
 |---|---|---|
 | Pi | `alt+l` | Open lazydocker in your default mode |
 | Overlay | `ctrl+q` | Close the overlay |
-| Overlay | `ctrl+f` | Reopen in fullscreen |
+| Overlay | `ctrl+o` | Reopen in fullscreen ("open full") |
 | Overlay / fullscreen | `q` | Quit lazydocker normally |
 
 Every other key goes straight to lazydocker. See [lazydocker's keybindings](https://github.com/jesseduffield/lazydocker/blob/master/docs/keybindings/Keybindings_en.md).

@@ -72,7 +72,7 @@ describe("LazydockerOverlay", () => {
     for (const line of lines) assert.equal(visibleWidth(line), 60);
     assert.match(lines[0] ?? "", /^╭─ lazydocker · myproj ─+╮$/);
     assert.match(lines[1] ?? "", /^│hello +\x1b\[0m│$/);
-    assert.match(lines.at(-1) ?? "", /^╰─+ ctrl\+q close · ctrl\+f fullscreen ─╯$/);
+    assert.match(lines.at(-1) ?? "", /^╰─+ ctrl\+q close · ctrl\+o fullscreen ─╯$/);
     const spawn = spawns[0];
     assert.equal(spawn?.file, "/bin/lazydocker");
     assert.deepEqual(spawn?.args, ["-p", "app"]);
@@ -113,12 +113,23 @@ describe("LazydockerOverlay", () => {
     }
   });
 
-  it("ctrl+f switches to fullscreen and kills the pty", () => {
+  it("ctrl+o switches to fullscreen and kills the pty, in legacy and kitty form", () => {
+    for (const key of ["\x0f", "\x1b[111;5u"]) {
+      const { overlay, pty, results } = setup();
+      overlay.render(60);
+      overlay.handleInput(key);
+      assert.deepEqual(results, [{ action: "fullscreen" }]);
+      assert.equal(pty.kills, 1);
+    }
+  });
+
+  // Pi binds ctrl+f to transcript search on Windows/WSL, so it is not an overlay control.
+  it("forwards ctrl+f to lazydocker instead of treating it as a control key", () => {
     const { overlay, pty, results } = setup();
     overlay.render(60);
     overlay.handleInput("\x06");
-    assert.deepEqual(results, [{ action: "fullscreen" }]);
-    assert.equal(pty.kills, 1);
+    assert.deepEqual(pty.writes, ["\x06"]);
+    assert.deepEqual(results, []);
   });
 
   it("forwards translated input to the pty", () => {

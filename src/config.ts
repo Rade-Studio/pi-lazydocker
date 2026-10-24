@@ -174,5 +174,5 @@ export const USAGE = [
   "  -h, --help        Show this help",
   "",
   "Other arguments are passed to lazydocker, e.g. /lazydocker -f compose.prod.yml",
-  "Inside the overlay: ctrl+q closes, ctrl+f switches to fullscreen.",
+  "Inside the overlay: ctrl+q closes, ctrl+o switches to fullscreen.",
 ].join("\n");

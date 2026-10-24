@@ -38,6 +38,6 @@ No build step is needed: Pi loads TypeScript directly, and the tests run on Node
 ## Manual check before a release
 
 1. `npm run check` passes.
-2. In Pi: `alt+l` opens the overlay, `ctrl+f` switches to fullscreen, `q` returns to Pi.
+2. In Pi: `alt+l` opens the overlay, `ctrl+o` switches to fullscreen, `q` returns to Pi.
 3. `/lazydocker --fullscreen` with Docker stopped shows the error until a key is pressed.
 4. `PI_LAZYDOCKER_KEY=off pi` registers no shortcut.

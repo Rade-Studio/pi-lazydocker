@@ -25,7 +25,7 @@ Down
 Sleep 1s
 Down
 Sleep 2s
-Ctrl+f
+Ctrl+o
 Sleep 4s
 Type "q"
 Sleep 2s

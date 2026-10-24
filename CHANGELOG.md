@@ -9,7 +9,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 
 - `/lazydocker` command and `alt+l` shortcut that open lazydocker inside Pi.
-- Overlay mode: a themed floating window backed by a pseudo-terminal and a headless terminal emulator. `ctrl+q` closes it and `ctrl+f` reopens lazydocker in fullscreen.
+- Overlay mode: a themed floating window backed by a pseudo-terminal and a headless terminal emulator. `ctrl+q` closes it and `ctrl+o` reopens lazydocker in fullscreen.
 - Fullscreen mode: pauses Pi's TUI, gives lazydocker the whole terminal, and restores Pi on exit. A non-zero exit stays on screen until a key is pressed.
 - Automatic fallback from overlay to fullscreen when the PTY module can't load or the terminal is too small.
 - Preflight checks with OS-specific install hints when lazydocker is missing.
