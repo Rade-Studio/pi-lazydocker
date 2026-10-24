@@ -5,13 +5,13 @@
   "license": "MIT",
   "type": "module",
   "author": "Asdrubal Hernandez (https://github.com/ahernand53)",
-  "homepage": "https://github.com/ahernand53/pi-lazydocker#readme",
+  "homepage": "https://github.com/Rade-Studio/pi-lazydocker#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahernand53/pi-lazydocker.git"
+    "url": "git+https://github.com/Rade-Studio/pi-lazydocker.git"
   },
   "bugs": {
-    "url": "https://github.com/ahernand53/pi-lazydocker/issues"
+    "url": "https://github.com/Rade-Studio/pi-lazydocker/issues"
   },
   "keywords": [
     "pi-package",

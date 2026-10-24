@@ -2,7 +2,7 @@
 
 **Open [lazydocker](https://github.com/jesseduffield/lazydocker) inside [Pi](https://pi.dev) with one keystroke.** Press `alt+l` and your containers, logs and stats show up in a themed floating window over your session. Press `ctrl+q` and you're back where you left off, with the agent still running.
 
-[![CI](https://github.com/ahernand53/pi-lazydocker/actions/workflows/ci.yml/badge.svg)](https://github.com/ahernand53/pi-lazydocker/actions/workflows/ci.yml)
+[![CI](https://github.com/Rade-Studio/pi-lazydocker/actions/workflows/ci.yml/badge.svg)](https://github.com/Rade-Studio/pi-lazydocker/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/pi-lazydocker.svg)](https://www.npmjs.com/package/pi-lazydocker)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -102,7 +102,7 @@ set -Ux PI_LAZYDOCKER_WIDTH 85%
 | Symptom | Fix |
 |---|---|
 | `Could not find "lazydocker" on your PATH` | Install lazydocker, or set `PI_LAZYDOCKER_COMMAND` to its absolute path. The message lists the install commands for your OS. |
-| `Overlay unavailable (...); opening lazydocker fullscreen.` | The prebuilt PTY binary for your platform didn't load. Fullscreen keeps working. Reinstall the package or [open an issue](https://github.com/ahernand53/pi-lazydocker/issues) with the message. |
+| `Overlay unavailable (...); opening lazydocker fullscreen.` | The prebuilt PTY binary for your platform didn't load. Fullscreen keeps working. Reinstall the package or [open an issue](https://github.com/Rade-Studio/pi-lazydocker/issues) with the message. |
 | lazydocker exits right away | It usually can't reach the Docker daemon. Fullscreen mode keeps the error on screen until you press a key. On WSL, make sure Docker Desktop's WSL integration (or the Docker service) is running. |
 | `alt+l` does nothing | Your terminal may intercept Alt. In Windows Terminal or iTerm2, check that Alt/Option sends Meta/Esc+, or pick another key with `PI_LAZYDOCKER_KEY`. |
 
@@ -114,7 +114,7 @@ set -Ux PI_LAZYDOCKER_WIDTH 85%
 ## Development
 
 ```bash
-git clone https://github.com/ahernand53/pi-lazydocker.git
+git clone https://github.com/Rade-Studio/pi-lazydocker.git
 cd pi-lazydocker
 npm install
 npm run check        # typecheck + tests
